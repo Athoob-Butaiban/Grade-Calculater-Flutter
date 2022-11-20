@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '';
 
 void main() {
   runApp(const MyApp());
@@ -31,16 +32,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -52,11 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
@@ -65,44 +51,49 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Column(
-        children: [
-          TextField(
+        body: SafeArea(
+      child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
             controller: controller,
+            keyboardType: TextInputType.number, // only numbers keyboard
             decoration: InputDecoration(
-              hintText: "enter you name",
-              prefixIcon: Icon(Icons.person), // person = persont
-            ),
+                // user input
+                hintText: "enter your grade",
+                prefixIcon: Icon(Icons.percent), //to add icon
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15))),
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                child: Text("Click here"),
-                onPressed: () {
-                  print("hello ${controller.text}");
-                  int grade = int.parse(controller.text);
+        ),
+        ElevatedButton(
+          // adding a button
 
-                  // evaluating the garde
-                  if (grade >= 90) {
-                    print("you grade is A ");
-                  } else if (grade >= 80) {
-                    print("you grade is B");
-                  } else if (grade >= 70) {
-                    print("you grade is C");
-                  } else if (grade >= 60) {
-                    print("you grade is D");
-                  } else {
-                    print("you grade is F");
-                  }
-                  controller.clear();
-                },
-              ),
-            ),
-          )
-        ],
-      )),
-    );
+          child: Text("calculate"),
+          onPressed: () {
+            print("hello ${controller.text}");
+            int grade = int.parse(controller.text); // convert the grade to int
+            if (grade == null) {
+              // evaluation for the text feild to have only numbers
+              print("${controller.text} is not a number");
+              return;
+            }
+            // evaluating the garde
+            if (grade >= 90) {
+              print("you grade is A ");
+            } else if (grade >= 80) {
+              print("you grade is B");
+            } else if (grade >= 70) {
+              print("you grade is C");
+            } else if (grade >= 60) {
+              print("you grade is D");
+            } else {
+              print("you grade is F");
+            }
+            controller.clear();
+          },
+        ),
+      ]),
+    ));
   }
 }
